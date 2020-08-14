@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1732481516",
+    "hash" : "3337941452",
     "id" : "7476E5CA",
-    "lastKnownWriteTime" : 1597436232,
-    "last_content_update" : 1597436232,
+    "lastKnownWriteTime" : 1597438688,
+    "last_content_update" : 1597438688602,
     "path" : "~/GitHub/R_EEG_Power_Densities/about.Rmd",
     "project_path" : "about.Rmd",
     "properties" : {
+        "cursorPosition" : "6,15",
+        "scrollLine" : "0"
     },
     "read_only" : false,
     "read_only_alternatives" : [
