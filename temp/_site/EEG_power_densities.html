@@ -315,13 +315,16 @@ table_function &lt;- function(table, caption, note){kable(table, format = &quot;
 <div id="the-emotiv-epoc" class="section level3">
 <h3>The Emotiv Epoc</h3>
 <p>This is a 14 channel portable EEG system. Characteristics of this system benefits research looking at dynamic tasks. The photos below were taken from Duvanige et al., 2013 [link] (<a href="https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-56" class="uri">https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-56</a>)</p>
+<pre class="r"><code>im &lt;- load.image(&quot;C:/Users/akfra/Documents/EPOC_IGN.jpg&quot;)
+p1 &lt;- plot(im,bty=&#39;n&#39;, xlim = c(0, 250), ylim = c(270, 0), axes = F)</code></pre>
+<p><img src="EEG_power_densities_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>im &lt;- load.image(&quot;C:/Users/akfra/Documents/emotiv_channels.jpg&quot;)
+p2 &lt;- plot(im,bty=&#39;n&#39;, xlim = c(50, 600), ylim = c(700, 190), axes = F)</code></pre>
+<p><img src="EEG_power_densities_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
 <pre class="r"><code>par(mfrow=c(1,2))
-im &lt;- load.image(&quot;C:/Users/akfra/Documents/EPOC_IGN.jpg&quot;)
-plot(im,bty=&#39;n&#39;, xlim = c(0, 280), ylim = c(270, 0), axes = F)
-
-im &lt;- load.image(&quot;C:/Users/akfra/Documents/emotiv_channels.jpg&quot;)
-plot(im,bty=&#39;n&#39;, xlim = c(50, 600), ylim = c(700, 190), axes = F)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+plot(p1)
+plot(p2)</code></pre>
+<p><img src="EEG_power_densities_files/figure-html/unnamed-chunk-2-3.png" width="672" /></p>
 </div>
 </div>
 <div id="evaluate-eeg-spectral-power-densities-for-bci-feature-selection" class="section level2">
@@ -1184,7 +1187,7 @@ a &lt;- ggplot(m.across_wl[m.across_wl$Range == &quot;alfa&quot;,], aes(variable
 b &lt;- ggplot(m.across_wl[m.across_wl$Range == &quot;beta&quot;,], aes(variable, value, fill= variable)) + geom_hline(yintercept=0, linetype=&quot;dashed&quot;, color = &quot;black&quot;, size=1) + geom_boxplot(outlier.shape = NA) + geom_jitter() + ylab(&quot;PPT PD Differences(µV)&quot;)  + ggtitle(&quot;Beta&quot;) + theme(plot.title = element_text(hjust = 0.5)) + theme(text=element_text(size=14)) + theme(axis.title.x = element_blank()) + theme(legend.position=&quot;none&quot;)
 
 grid.arrange(d, t, a, b, nrow = 4)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="EEG_power_densities_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>There are some really extreme values. Remove these.</p>
 <pre class="r"><code>cols &lt;- c(&quot;1&quot;=&quot;#00aedb&quot;,&quot;2&quot;=&quot;#ffc425&quot;,&quot;3&quot;=&quot;#f37735&quot;)
 p &lt;- ggplot(m.across_wl, aes(x = NA, y = value)) + geom_boxplot(outlier.shape = NA, width = 0.2) + geom_jitter()  + theme(axis.title.x = element_blank()) + theme(axis.text.x = element_blank())
@@ -1195,7 +1198,7 @@ p &lt;- p + geom_hline(yintercept=c(stand_dev, stand_dev *-1), linetype=&quot;so
 d &lt;-  ggplot(m.across_wl, aes(x=value))+ geom_density() + theme(axis.title.x = element_blank()) + theme(axis.text.x = element_blank()) + ggtitle(&#39;Density Plot&#39;)
 
 grid.arrange(p,d, nrow = 1)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="EEG_power_densities_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>The extreme values here are very unlikely to be reliable sources of neural activity. Each point is an individual difference between two points of time corresponding to different workload conditions. Changes of ~200 mv and above are not natural phenomena and are likely better explained by displacement of electrodes and other artifacts.</p>
 <div id="remove-bad-data" class="section level4">
 <h4>Remove bad data</h4>
@@ -1213,7 +1216,7 @@ a &lt;- ggplot(m.across_wl_RemoveOutliers[m.across_wl_RemoveOutliers$Range == &q
 b &lt;- ggplot(m.across_wl_RemoveOutliers[m.across_wl_RemoveOutliers$Range == &quot;beta&quot;,], aes(variable, value, fill= variable)) + geom_hline(yintercept=0, linetype=&quot;dashed&quot;, color = &quot;black&quot;, size=1) + geom_boxplot(outlier.shape = NA) + geom_jitter() + ylab(&quot;PPT PD Differences(µV)&quot;) + ggtitle(&quot;Beta&quot;) + theme(plot.title = element_text(hjust = 0.5)) + theme(text=element_text(size=14)) + theme(axis.title.x = element_blank()) + scale_y_continuous(limits=c(-50,50), breaks=seq(-50,50,20))  + theme(legend.position=&quot;none&quot;)
 
 grid.arrange(d, t, a, b, nrow = 4)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="EEG_power_densities_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="compute-medians-for-each-electrode-frequency-band-effect" class="section level3">
@@ -1552,7 +1555,7 @@ Theta
 </table>
 <p>Using this table to construct heatmap. I selected out ‘ALL’ to evaluate potential of particular features, and removed Delta as jaw and movement artifacts are often observed in this frequency range. Additional small amount of sampling (&lt;4Hz) results in poor potential in pattern recognition procedures.</p>
 <pre class="r"><code>p1 &lt;- pheatmap(table[c(1,3,5),], main = &quot;Median Effect Size: High - Low workload power densities&quot;, dendrogram = F, cluster_rows = T, cluster_cols = T, fontsize = 12)</code></pre>
-<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="EEG_power_densities_files/figure-html/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>This heatmap shows the relative differences in power density effects observed across different frequency bands and electrodes. Patterns resembling the ‘Engagment Index’ manifest across parietal and some frontal electrodes where beta power is increased with high workload whereas alpha and theta power densities decrease or increase minimally.</p>
 <p>Since these patterns have been found in many other contexts of high workload and engagement this provides support for the signal acquisition procedure used in this study. Additionally it provides direction for feature selection in BCI.</p>
 <pre class="r"><code>engagement_ratios_all &lt;- data.frame(table[3,1]-(table[1,1] + table[5,1]))
